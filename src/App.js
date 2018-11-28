@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import Counter from './Counter'
+import Chat from './chat/Chat'
 
 class App extends Component {
   render() {
     return (
-      <Counter />
+      <Chat />
     )
   }
 }
