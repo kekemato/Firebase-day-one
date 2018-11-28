@@ -1,5 +1,8 @@
 import React from 'react'
 import NewMessageForm from './NewMessageForm'
+import { database } from '../firebase'
+
+const dbMessagesRef = database.ref('/chat')
 
 class Chat extends React.Component {
     state = {
@@ -7,14 +10,33 @@ class Chat extends React.Component {
         messages: []
     }
 
+    componentDidMount() {
+        dbMessagesRef.on(
+            'value',
+            snapshot => {
+                const messages = Object.entries(
+                    snapshot.val()
+                ).map(([key, value]) => ({
+                    ...value,
+                    key // to samo co key: key
+                    // to też to samo
+                    // ...entry[1],
+                    //key: entry[0]
+                }))
+                this.setState({ messages: messages })
+            }
+        )
+    }
+
     handleChange = event => {
         this.setState({ newMessageText: event.target.value })
     }
 
     handleClick = () => {
-        const newMessage = {messageText: ''}
-        newMessage.messageText = this.state.newMessageText
-        this.setState({messages: this.state.messages.concat(newMessage)})
+        dbMessagesRef.push({
+            text: this.state.newMessageText,
+            timestamp: Date.now()
+        })
     }
 
     render() {
@@ -25,6 +47,12 @@ class Chat extends React.Component {
                     handleChange={this.handleChange}
                     handleClick={this.handleClick}
                 />
+                {this.state.messages.map(message => (
+                    <div
+                        key={message.key} >
+                        {message.text}
+                    </div>)
+                )}
             </div>
         )
     }
