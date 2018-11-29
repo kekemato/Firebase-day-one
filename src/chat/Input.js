@@ -3,7 +3,8 @@ import { TextField } from 'material-ui'
 import RaisedButton from 'material-ui/RaisedButton'
 
 const Input = (props) => (
-    <div>
+    <form
+    onSubmit={props.handleClick}>
         <TextField
             type="text"
             hintText="Type new message"
@@ -17,7 +18,7 @@ const Input = (props) => (
             fullWidth={true}
             primary={true}
         />
-    </div>
+    </form>
 )
 
 export default Input
