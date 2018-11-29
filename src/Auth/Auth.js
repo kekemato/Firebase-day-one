@@ -13,9 +13,9 @@ class Auth extends React.Component {
         auth.onAuthStateChanged(
             user => {
                 if (user) {
-                    this.setState({isUserLoggedIn: true})
+                    this.setState({ isUserLoggedIn: true })
                 } else {
-                    this.setState({isUserLoggedIn: false})
+                    this.setState({ isUserLoggedIn: false })
                 }
             }
         )
@@ -24,10 +24,12 @@ class Auth extends React.Component {
     handleLoginChange = event => this.setState({ login: event.target.value })
     handlePasswordChange = event => this.setState({ password: event.target.value })
 
-    handleLogInClick = () =>{
+    handleLogInClick = () => {
         auth.signInWithEmailAndPassword(this.state.login, this.state.password)
-        // .then(console.log)
-        // .catch(console.log)
+            .catch(error => {
+                alert('Something is wrong!')
+                console.log(error)
+            })
     }
     handleLogInWithGoogleClick = () => console.log('clicked')
 
