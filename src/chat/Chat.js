@@ -1,6 +1,7 @@
 import React from 'react'
+
 import NewMessageForm from './NewMessageForm'
-import { database } from '../firebase'
+import { auth, database } from '../firebase'
 import { mapObjectToArray } from '../utils'
 import MessagesList from './MessagesList'
 
@@ -35,7 +36,12 @@ class Chat extends React.Component {
 
         dbMessagesRef.push({
             text: this.state.newMessageText,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            author: {
+                email: auth.currentUser.email,
+                displayName: auth.currentUser.displayName,
+                img: auth.currentUser.photoURL || `https://api.adorable.io/avatars/50/${auth.currentUser.email}`
+            }
         })
     }
 

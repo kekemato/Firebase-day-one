@@ -13,7 +13,7 @@ const Forms = props => (
         }}
         >
             <TextField
-                value={props.login}
+                value={props.email}
                 type="email"
                 onChange={props.handleLoginChange}
                 hintText="email"

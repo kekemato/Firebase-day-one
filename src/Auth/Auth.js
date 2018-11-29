@@ -1,10 +1,12 @@
 import React from 'react'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+
 import Forms from './Forms'
-import { auth } from '../firebase'
+import { auth, googleProvider } from '../firebase'
 
 class Auth extends React.Component {
     state = {
-        login: "",
+        email: "",
         password: "",
         isUserLoggedIn: false
     }
@@ -21,7 +23,7 @@ class Auth extends React.Component {
         )
     }
 
-    handleLoginChange = event => this.setState({ login: event.target.value })
+    handleLoginChange = event => this.setState({ email: event.target.value })
     handlePasswordChange = event => this.setState({ password: event.target.value })
 
     handleLogInClick = () => {
@@ -31,15 +33,36 @@ class Auth extends React.Component {
                 console.log(error)
             })
     }
-    handleLogInWithGoogleClick = () => console.log('clicked')
+
+    handleLogInWithGoogleClick = () => {
+        auth.signInWithPopup(googleProvider)
+    }
+
+    onLogOutClickHandler = () => auth.signOut()
 
     render() {
         return (
             this.state.isUserLoggedIn ?
-                this.props.children
+                <div>
+                    <FloatingActionButton
+                        secondary={true}
+                        style={{
+                            position: "fixed",
+                            top: 20,
+                            right: 70,
+                            zIndex: 999,
+                            color: "white"
+                        }
+                        }
+                        onClick={this.onLogOutClickHandler}
+                    >
+                        Log Out
+                    </FloatingActionButton>
+                    {this.props.children}
+                </div>
                 :
                 <Forms
-                    login={this.state.login}
+                    email={this.state.email}
                     password={this.state.password}
                     handleLoginChange={this.handleLoginChange}
                     handlePasswordChange={this.handlePasswordChange}

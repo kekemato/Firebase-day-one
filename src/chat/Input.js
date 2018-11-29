@@ -10,13 +10,20 @@ const Input = (props) => (
             hintText="Type new message"
             value={props.newMessageText}
             onChange={props.handleChange}
-            fullWidth={true}
+            style={{
+                width:"90%",
+                marginLeft: "5%",
+            }}
         />
         <RaisedButton
             label={'Add message!'}
             onClick={props.handleClick}
-            fullWidth={true}
             primary={true}
+            style={{
+                width:"90%",
+                marginLeft: "5%",
+                marginRight: "5%"
+            }}
         />
     </form>
 )
