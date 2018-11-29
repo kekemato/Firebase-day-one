@@ -1,16 +1,20 @@
 import React from 'react'
+import { TextField } from 'material-ui'
+import Button from '../components/Button'
 
 const Input = (props) => (
     <div>
-        <input
+        <TextField
             type="text"
+            hintText="Type new message"
             value={props.newMessageText}
-            onChange={props.handleChange} />
-        <button
+            onChange={props.handleChange}
+            fullWidth={true}
+        />
+        <Button
+            label={'Add message!'}
             onClick={props.handleClick}
-        >
-            Coś
-        </button>
+        />
     </div>
 )
 

@@ -1,6 +1,8 @@
 import React from 'react'
 import NewMessageForm from './NewMessageForm'
 import { database } from '../firebase'
+import { mapObjectToArray } from '../utils'
+import MessagesList from './MessagesList'
 
 const dbMessagesRef = database.ref('/chat')
 
@@ -13,19 +15,15 @@ class Chat extends React.Component {
     componentDidMount() {
         dbMessagesRef.on(
             'value',
-            snapshot => {
-                const messages = Object.entries(
-                    snapshot.val()
-                ).map(([key, value]) => ({
-                    ...value,
-                    key // to samo co key: key
-                    // to też to samo
-                    // ...entry[1],
-                    //key: entry[0]
-                }))
-                this.setState({ messages: messages })
-            }
+            snapshot =>
+                this.setState({
+                    messages: mapObjectToArray(snapshot.val()).reverse()
+                })
         )
+    }
+
+    componentWillUnmount() {
+        dbMessagesRef.off()
     }
 
     handleChange = event => {
@@ -47,13 +45,10 @@ class Chat extends React.Component {
                     handleChange={this.handleChange}
                     handleClick={this.handleClick}
                 />
-                {this.state.messages.map(message => (
-                    <div
-                        key={message.key} >
-                        {message.text}
-                    </div>)
-                )}
+                <MessagesList
+                messages={this.state.messages}/>
             </div>
+
         )
     }
 }
