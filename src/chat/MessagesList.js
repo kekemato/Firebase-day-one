@@ -17,7 +17,7 @@ const MessagesList = (props) => (
                     rightIconButton={
                         <IconButton>
                             <DeleteIcon
-                            onClick={() => console.log(message.key)}
+                            onClick={() => props.onDeleteMessageClickHandler(message.key)}
                             />
                         </IconButton>
                     }>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { TextField } from 'material-ui'
-import Button from '../components/Button'
+import RaisedButton from 'material-ui/RaisedButton'
 
 const Input = (props) => (
     <div>
@@ -11,9 +11,11 @@ const Input = (props) => (
             onChange={props.handleChange}
             fullWidth={true}
         />
-        <Button
+        <RaisedButton
             label={'Add message!'}
             onClick={props.handleClick}
+            fullWidth={true}
+            primary={true}
         />
     </div>
 )

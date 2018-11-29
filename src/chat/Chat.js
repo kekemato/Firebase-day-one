@@ -37,6 +37,11 @@ class Chat extends React.Component {
         })
     }
 
+    onDeleteMessageClickHandler = (messageKey) => {
+        dbMessagesRef.child(messageKey)
+        .remove()
+    }
+
     render() {
         return (
             <div>
@@ -46,7 +51,9 @@ class Chat extends React.Component {
                     handleClick={this.handleClick}
                 />
                 <MessagesList
-                messages={this.state.messages}/>
+                messages={this.state.messages}
+                onDeleteMessageClickHandler={this.onDeleteMessageClickHandler}
+                />
             </div>
 
         )
